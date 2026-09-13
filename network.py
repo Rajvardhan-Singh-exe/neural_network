@@ -83,7 +83,8 @@ def tester(index,w1,b1,w2,b2):
     print("Prediction: ", pre)
     print("Label: ", label)
 
-    current_image=current_image.rehsape((28,28)*255)
+    current_image=current_image.reshape((28,28)*255)
     plot.gray()
     plot.imshow(current_image,interpolation='nearest')
     plot.show()
+tester(index,w1,b1,w2,b2)
