@@ -70,7 +70,7 @@ def gradedes(x,y,lr,epochs):
             print(accuarcy(predictions, y))
     return w1, b1, w2, b2
 
-w1,b1,w2,b2=gradedes(x,y,0.1,3000)
+w1,b1,w2,b2=gradedes(x,y,0.1,30000)
 
 
 #for predections#
