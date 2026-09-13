@@ -25,23 +25,23 @@ def softmax(z):
 def for_prp(w1,w2,b1,b2,x):
     z1=np.dot(w1,x)+b1
     a1=relu(z1)
-    z2=np.dot(w2,x)+b2
+    z2=np.dot(w2,a1)+b2
     a2=softmax(z2)
     return z1,a1,z2,a2
 def rder(z): # relu derivative
     return z>0 
 def onehot(y):
     one=np.zeros((y.size,y.max()+1))
-    one[np.arrange(y.size),y]=1
+    one[np.arange(y.size),y]=1
     return one.T
 def backprop(z1,z2,w1,a1,w2,a2,x,y):
     m=len(y)
     one=onehot(y)
     dz2=a2-one
     dw2=(1/m)*(dz2.dot(a1.T))#hidden layer to output layer
-    db2=(1/m)*(np.sum(dz2))
+    db2=(1/m)*(np.sum(dz2,axis=1,keepdims=True))
     dz1=np.dot(w2.T,dz2)*rder(z1)
-    dw1=(1/m)*(dz1.dot(a1.T)) # input layer to hidden layer
+    dw1=(1/m)*(dz1.dot(x.T)) # input layer to hidden layer
     db1=(1/m)*(np.sum(dz1,axis=1,keepdims=True))
     return dw1,dw2,db1,db2
 def updte(w1,b1,w2,b2,dw1,dw2,db1,db2,lr):
@@ -66,3 +66,24 @@ def gradedes(x,y,lr,epochs):
             predictions = pred(a2)
             print(accuarcy(predictions, y))
     return w1, b1, w2, b2
+
+w1,b1,w2,b2=gradedes(x,y,0.01,700)
+
+
+#for predections#
+def preds(x,w1,b1,w2,b2):
+    _,_,_,a=for_prp(w1,w2,b1,b2,x)
+    predections=pred(a)
+    return predections
+index=2
+def tester(index,w1,b1,w2,b2):
+    current_image=x[:,index,None]
+    pre=preds(x[:,index,None],w1,b1,w2,b2)
+    label=y[index]
+    print("Prediction: ", pre)
+    print("Label: ", label)
+
+    current_image=current_image.rehsape((28,28)*255)
+    plot.gray()
+    plot.imshow(current_image,interpolation='nearest')
+    plot.show()
