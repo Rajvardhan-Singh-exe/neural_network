@@ -1,5 +1,6 @@
 #special thanks to samson zhangs's implementation i sued it as an inspiration here to learn #
 #there might be some return or varaible error #
+#this helped me understand the fundamentals of nns and mathematical f(X) likes softmax,argmax,relu etc any feedback would be appreciated thank you#
 import numpy as np
 import pandas as pd
 #we use softmax here that is ei/(sigma ei)
