@@ -24,6 +24,7 @@ def inpar():
 def relu(z):
     return np.maximum(0,z)
 def softmax(z):
+    z=z - np.max(z, axis=0)
     return np.exp(z)/sum(np.exp(z))
 def for_prp(w1,w2,b1,b2,x):
     z1=np.dot(w1,x)+b1
@@ -34,7 +35,7 @@ def for_prp(w1,w2,b1,b2,x):
 def rder(z): # relu derivative
     return z>0 
 def onehot(y):
-    one=np.zeros((y.size,y.max()+1))
+    one=np.zeros((y.size,y.max()+1)) # can be hardcoded to 10 but whateever 
     one[np.arange(y.size),y]=1
     return one.T
 def backprop(z1,z2,w1,a1,w2,a2,x,y):
@@ -70,7 +71,7 @@ def gradedes(x,y,lr,epochs):
             print(accuarcy(predictions, y))
     return w1, b1, w2, b2
 
-w1,b1,w2,b2=gradedes(x,y,0.1,30000)
+w1,b1,w2,b2=gradedes(x,y,0.1,1000)
 
 
 #for predections#
